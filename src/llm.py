@@ -63,9 +63,15 @@ class LLM:
         cmd = ["claude", "-p", "--model", model]
         if system:
             cmd += ["--append-system-prompt", system]
-        r = subprocess.run(cmd, input=prompt, capture_output=True, text=True, timeout=300)
+        r = subprocess.run(cmd, input=prompt, capture_output=True, text=True, timeout=600)
         if r.returncode != 0:
-            raise RuntimeError(f"claude cli failed: {r.stderr[-400:]}")
+            # The user's global settings emit pages of permission warnings on
+            # stderr, so the tail is noise; the real error is at the head.
+            err = "\n".join(l for l in r.stderr.splitlines()
+                            if "Permission allow rule" not in l)[:400]
+            raise RuntimeError(f"claude cli rc={r.returncode}: {err or r.stdout[:200]!r}")
+        if not r.stdout.strip():
+            raise RuntimeError("claude cli returned empty stdout")
         return r.stdout.strip()
 
     # ---- public -------------------------------------------------------------

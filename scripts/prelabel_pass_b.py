@@ -43,6 +43,7 @@ def main() -> None:
     intents = "\n".join(f"- {k}: {v}" for k, v in INTENTS.items())
     rules = "\n".join(f"- {k}: {v}" for k, v in ESCALATION_RULES.items())
     rows = [json.loads(l) for l in open("data/golden/preannotated.jsonl")]
+    # Successful calls are cached, so a rerun only redoes what actually failed.
 
     def annotate(r):
         ctx = f"EARLIER IN THREAD: {r['prior_turn']}\n" if r.get("prior_turn") else ""
@@ -56,7 +57,7 @@ def main() -> None:
         return {**r, "pre_b": {"intent": None, "action": None, "rules_fired": [],
                                "reason": "PASS B FAILED"}}
 
-    with cf.ThreadPoolExecutor(10) as ex:
+    with cf.ThreadPoolExecutor(5) as ex:
         out = list(ex.map(annotate, rows))
 
     with open("data/golden/preannotated.jsonl", "w") as f:
