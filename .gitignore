@@ -1,0 +1,11 @@
+# Raw dataset (516MB) — fetched by scripts/fetch_data.py
+data/raw/
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
