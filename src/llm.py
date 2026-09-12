@@ -11,7 +11,7 @@ Backends
         This is what generated the committed artifacts -- see README "Provenance".
 """
 from __future__ import annotations
-import hashlib, json, os, pathlib, subprocess, threading, time
+import hashlib, json, os, pathlib, subprocess, sys, threading, time
 
 CACHE_PATH = pathlib.Path(os.environ.get("LLM_CACHE", "artifacts/cache/llm_cache.jsonl"))
 GEN_MODEL   = "claude-haiku-4-5-20251001"   # drafts + classifies
@@ -58,10 +58,12 @@ class LLM:
     def _call_cli(self, model, temperature, system, prompt, max_tokens):
         # `claude -p` has no temperature flag; prompts are written to be
         # deterministic-ish and the cache pins whatever came back.
-        cmd = ["claude", "-p", prompt, "--model", model]
+        # Prompt goes on stdin: as argv it hits shell/arg-length limits and the
+        # CLI silently mis-parses multi-line prompts.
+        cmd = ["claude", "-p", "--model", model]
         if system:
             cmd += ["--append-system-prompt", system]
-        r = subprocess.run(cmd, capture_output=True, text=True, timeout=240)
+        r = subprocess.run(cmd, input=prompt, capture_output=True, text=True, timeout=300)
         if r.returncode != 0:
             raise RuntimeError(f"claude cli failed: {r.stderr[-400:]}")
         return r.stdout.strip()
@@ -85,6 +87,11 @@ class LLM:
                 break
             except Exception as e:                # transient 429/529/timeout
                 last = e
+                # Don't silently burn retries on a deterministic failure: a bad
+                # prompt fails identically 4 times and just looks like slowness.
+                if isinstance(e, (ValueError, TypeError)):
+                    raise
+                print(f"  [llm retry {attempt + 1}/4] {str(e)[:160]}", file=sys.stderr)
                 time.sleep(2 ** attempt)
         else:
             raise RuntimeError(f"LLM failed after 4 attempts: {last}")
