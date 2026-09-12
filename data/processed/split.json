@@ -1,0 +1,12 @@
+{
+  "brand": "AmazonHelp",
+  "split_at": "2017-11-15 15:11:28.300000+00:00",
+  "n_corpus": 76181,
+  "n_eval_pool": 40707,
+  "dropped": {
+    "no_parent": 464,
+    "parent_outbound": 9,
+    "not_english": 51661,
+    "too_short": 265
+  }
+}
