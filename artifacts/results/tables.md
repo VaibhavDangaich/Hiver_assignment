@@ -8,8 +8,8 @@ Gold labels: `machine_consensus_provisional` · 172 cases
 |---|--:|--:|--:|--:|--:|--:|--:|--:|--:|
 | B0 majority (trivial) | 109 | 0.229 | 0.034 | 0.789 | 0 (0.0%) | 23 (21.1%) | 0.0% | **0.21** | — |
 | B1 keyword (simple) | 109 | 0.385 | 0.352 | 0.541 | 46 (42.2%) | 4 (3.7%) | 59.6% | **4.26** | — |
-| B2 retrieval-copy | 109 | 0.385 | 0.352 | 0.431 | 60 (55.0%) | 2 (1.8%) | 74.3% | **5.52** | 2.80 |
-| **AGENT** | 109 | 0.899 | 0.934 | 0.917 | 5 (4.6%) | 4 (3.7%) | 22.0% | **0.49** | 3.54 |
+| B2 retrieval-copy | 109 | 0.385 | 0.352 | 0.431 | 60 (55.0%) | 2 (1.8%) | 74.3% | **5.52** | 2.84 |
+| **AGENT** | 109 | 0.899 | 0.934 | 0.917 | 5 (4.6%) | 4 (3.7%) | 22.0% | **0.49** | 3.51 |
 
 ### Enriched slice (rare/hard intents, NOT representative)
 
@@ -17,8 +17,8 @@ Gold labels: `machine_consensus_provisional` · 172 cases
 |---|--:|--:|--:|--:|--:|--:|--:|--:|--:|
 | B0 majority (trivial) | 63 | 0.048 | 0.008 | 0.841 | 0 (0.0%) | 10 (15.9%) | 0.0% | **0.16** | — |
 | B1 keyword (simple) | 63 | 0.540 | 0.335 | 0.794 | 9 (14.3%) | 4 (6.3%) | 23.8% | **1.49** | — |
-| B2 retrieval-copy | 63 | 0.540 | 0.335 | 0.794 | 10 (15.9%) | 3 (4.8%) | 27.0% | **1.64** | — |
-| **AGENT** | 63 | 0.921 | 0.836 | 0.937 | 0 (0.0%) | 4 (6.3%) | 9.5% | **0.06** | — |
+| B2 retrieval-copy | 63 | 0.540 | 0.335 | 0.794 | 10 (15.9%) | 3 (4.8%) | 27.0% | **1.64** | 2.28 |
+| **AGENT** | 63 | 0.921 | 0.836 | 0.937 | 0 (0.0%) | 4 (6.3%) | 9.5% | **0.06** | 3.29 |
 
 *cost/case* = expected cost under the declared 10:1 model (10 per missed escalation, 1 per needless). Lower is better.
 *reply quality* = judge composite (1–5) on cases that system actually auto-posts.
@@ -50,3 +50,11 @@ Top confusions (gold → predicted):
 - `delivery_not_received` → `delivery_late` ×1
 - `return_replace` → `no_request` ×1
 - `delivery_not_received` → `no_request` ×1
+
+### Judge vs human
+
+> **Not yet measured.** artifacts/results/human_reply_ratings.jsonl absent -- run scripts/rate_replies.py. Judge scores are UNVALIDATED until then.
+
+Two independent pre-annotation passes agreed on intent 85.0% and on routing 90.5% (κ=0.72, n=220).
+
+> **Gold provenance:** data/golden/labelled.jsonl absent -- run scripts/adjudicate.py. Until then all metrics use the A/B machine consensus and are labelled machine_consensus_provisional.

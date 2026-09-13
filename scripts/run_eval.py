@@ -82,7 +82,8 @@ def main() -> None:
                     rules_fired=out.get("rules_fired", []),
                     reason=out.get("reason", ""),
                     guardrail_reasons=out.get("guardrail_reasons", []),
-                    top_similarity=out.get("top_similarity", 0.0))
+                    top_similarity=out.get("top_similarity", 0.0),
+                    retrieved=out.get("retrieved", []))
 
     if args.systems:
         want = {x.strip() for x in args.systems.split(",")}

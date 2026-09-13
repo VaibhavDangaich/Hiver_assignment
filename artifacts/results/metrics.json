@@ -20,33 +20,33 @@
           "expected_cost": 0.337
         },
         "reply_quality_auto_only": {
-          "mean_grounded": 3.455,
-          "mean_helpful": 2.864,
-          "mean_tone": 3.636,
-          "mean_safe": 4.227,
-          "n_judged": 22,
-          "mean_composite": 3.545,
-          "unsupported_claim_rate": 0.364,
+          "mean_grounded": 3.267,
+          "mean_helpful": 2.833,
+          "mean_tone": 3.6,
+          "mean_safe": 4.167,
+          "n_judged": 30,
+          "mean_composite": 3.467,
+          "unsupported_claim_rate": 0.433,
           "worst_axis_counts": {
             "safe": 1,
-            "tone": 4,
-            "grounded": 8,
-            "helpful": 9
+            "tone": 5,
+            "grounded": 12,
+            "helpful": 12
           }
         },
         "reply_quality_all_drafts": {
-          "mean_grounded": 2.924,
-          "mean_helpful": 3.033,
-          "mean_tone": 3.489,
-          "mean_safe": 3.587,
-          "n_judged": 92,
-          "mean_composite": 3.258,
-          "unsupported_claim_rate": 0.674,
+          "mean_grounded": 2.762,
+          "mean_helpful": 3.07,
+          "mean_tone": 3.529,
+          "mean_safe": 3.558,
+          "n_judged": 172,
+          "mean_composite": 3.23,
+          "unsupported_claim_rate": 0.727,
           "worst_axis_counts": {
-            "tone": 11,
-            "helpful": 22,
-            "grounded": 50,
-            "safe": 8
+            "tone": 14,
+            "helpful": 36,
+            "grounded": 106,
+            "safe": 15
           }
         },
         "per_class": {
@@ -199,32 +199,32 @@
           "expected_cost": 0.495
         },
         "reply_quality_auto_only": {
-          "mean_grounded": 3.455,
-          "mean_helpful": 2.864,
-          "mean_tone": 3.636,
-          "mean_safe": 4.227,
-          "n_judged": 22,
-          "mean_composite": 3.545,
-          "unsupported_claim_rate": 0.364,
+          "mean_grounded": 3.333,
+          "mean_helpful": 2.833,
+          "mean_tone": 3.667,
+          "mean_safe": 4.208,
+          "n_judged": 24,
+          "mean_composite": 3.51,
+          "unsupported_claim_rate": 0.417,
           "worst_axis_counts": {
             "safe": 1,
             "tone": 4,
-            "grounded": 8,
+            "grounded": 10,
             "helpful": 9
           }
         },
         "reply_quality_all_drafts": {
-          "mean_grounded": 2.924,
-          "mean_helpful": 3.033,
-          "mean_tone": 3.489,
-          "mean_safe": 3.587,
-          "n_judged": 92,
-          "mean_composite": 3.258,
-          "unsupported_claim_rate": 0.674,
+          "mean_grounded": 2.872,
+          "mean_helpful": 3.073,
+          "mean_tone": 3.532,
+          "mean_safe": 3.596,
+          "n_judged": 109,
+          "mean_composite": 3.268,
+          "unsupported_claim_rate": 0.697,
           "worst_axis_counts": {
-            "tone": 11,
-            "helpful": 22,
-            "grounded": 50,
+            "tone": 12,
+            "helpful": 23,
+            "grounded": 65,
             "safe": 8
           }
         }
@@ -246,10 +246,33 @@
           "expected_cost": 0.063
         },
         "reply_quality_auto_only": {
-          "n_judged": 0
+          "mean_grounded": 3.0,
+          "mean_helpful": 2.833,
+          "mean_tone": 3.333,
+          "mean_safe": 4.0,
+          "n_judged": 6,
+          "mean_composite": 3.292,
+          "unsupported_claim_rate": 0.5,
+          "worst_axis_counts": {
+            "grounded": 2,
+            "helpful": 3,
+            "tone": 1
+          }
         },
         "reply_quality_all_drafts": {
-          "n_judged": 0
+          "mean_grounded": 2.571,
+          "mean_helpful": 3.063,
+          "mean_tone": 3.524,
+          "mean_safe": 3.492,
+          "n_judged": 63,
+          "mean_composite": 3.163,
+          "unsupported_claim_rate": 0.778,
+          "worst_axis_counts": {
+            "grounded": 41,
+            "helpful": 13,
+            "tone": 2,
+            "safe": 7
+          }
         }
       }
     },
@@ -677,33 +700,33 @@
           "expected_cost": 4.099
         },
         "reply_quality_auto_only": {
-          "mean_grounded": 2.667,
-          "mean_helpful": 1.971,
-          "mean_tone": 2.696,
-          "mean_safe": 3.884,
-          "n_judged": 69,
-          "mean_composite": 2.804,
-          "unsupported_claim_rate": 0.464,
+          "mean_grounded": 2.582,
+          "mean_helpful": 1.929,
+          "mean_tone": 2.643,
+          "mean_safe": 3.806,
+          "n_judged": 98,
+          "mean_composite": 2.74,
+          "unsupported_claim_rate": 0.48,
           "worst_axis_counts": {
-            "grounded": 14,
-            "helpful": 40,
-            "tone": 13,
+            "grounded": 22,
+            "helpful": 58,
+            "tone": 16,
             "safe": 1
           }
         },
         "reply_quality_all_drafts": {
-          "mean_grounded": 2.731,
-          "mean_helpful": 1.989,
-          "mean_tone": 2.774,
-          "mean_safe": 3.903,
-          "n_judged": 93,
-          "mean_composite": 2.849,
-          "unsupported_claim_rate": 0.473,
+          "mean_grounded": 2.576,
+          "mean_helpful": 1.924,
+          "mean_tone": 2.669,
+          "mean_safe": 3.744,
+          "n_judged": 172,
+          "mean_composite": 2.728,
+          "unsupported_claim_rate": 0.523,
           "worst_axis_counts": {
-            "grounded": 20,
-            "helpful": 58,
-            "tone": 13,
-            "safe": 1
+            "grounded": 37,
+            "helpful": 108,
+            "tone": 23,
+            "safe": 3
           }
         },
         "per_class": {
@@ -856,32 +879,32 @@
           "expected_cost": 5.523
         },
         "reply_quality_auto_only": {
-          "mean_grounded": 2.667,
-          "mean_helpful": 1.971,
-          "mean_tone": 2.696,
-          "mean_safe": 3.884,
-          "n_judged": 69,
-          "mean_composite": 2.804,
-          "unsupported_claim_rate": 0.464,
+          "mean_grounded": 2.691,
+          "mean_helpful": 2.012,
+          "mean_tone": 2.741,
+          "mean_safe": 3.901,
+          "n_judged": 81,
+          "mean_composite": 2.836,
+          "unsupported_claim_rate": 0.469,
           "worst_axis_counts": {
-            "grounded": 14,
-            "helpful": 40,
-            "tone": 13,
+            "grounded": 17,
+            "helpful": 47,
+            "tone": 15,
             "safe": 1
           }
         },
         "reply_quality_all_drafts": {
-          "mean_grounded": 2.731,
-          "mean_helpful": 1.989,
-          "mean_tone": 2.774,
-          "mean_safe": 3.903,
-          "n_judged": 93,
-          "mean_composite": 2.849,
-          "unsupported_claim_rate": 0.473,
+          "mean_grounded": 2.688,
+          "mean_helpful": 1.991,
+          "mean_tone": 2.771,
+          "mean_safe": 3.881,
+          "n_judged": 109,
+          "mean_composite": 2.833,
+          "unsupported_claim_rate": 0.495,
           "worst_axis_counts": {
-            "grounded": 20,
-            "helpful": 58,
-            "tone": 13,
+            "grounded": 25,
+            "helpful": 67,
+            "tone": 15,
             "safe": 1
           }
         }
@@ -903,10 +926,33 @@
           "expected_cost": 1.635
         },
         "reply_quality_auto_only": {
-          "n_judged": 0
+          "mean_grounded": 2.059,
+          "mean_helpful": 1.529,
+          "mean_tone": 2.176,
+          "mean_safe": 3.353,
+          "n_judged": 17,
+          "mean_composite": 2.279,
+          "unsupported_claim_rate": 0.529,
+          "worst_axis_counts": {
+            "helpful": 11,
+            "grounded": 5,
+            "tone": 1
+          }
         },
         "reply_quality_all_drafts": {
-          "n_judged": 0
+          "mean_grounded": 2.381,
+          "mean_helpful": 1.81,
+          "mean_tone": 2.492,
+          "mean_safe": 3.508,
+          "n_judged": 63,
+          "mean_composite": 2.548,
+          "unsupported_claim_rate": 0.571,
+          "worst_axis_counts": {
+            "tone": 8,
+            "helpful": 41,
+            "grounded": 12,
+            "safe": 2
+          }
         }
       }
     }
