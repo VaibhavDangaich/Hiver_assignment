@@ -33,8 +33,21 @@ def main() -> None:
     args = ap.parse_args()
 
     rows = [json.loads(l) for l in open(args.preds)]
-    items = [r for r in rows if (r.get("reply") or "").strip()]
+    # Only items the judge actually scored: agreement.py joins on (case_id,
+    # system), so an item with no judge score can never contribute evidence
+    # and would just burn a human's time for nothing.
+    items = [r for r in rows if (r.get("reply") or "").strip()
+             and r.get("judge", {}).get("scored")]
     rng = random.Random(args.seed)
+    # Stratify by system so a plain shuffle can't accidentally hand the human
+    # mostly one system's replies -- agreement needs every system represented.
+    by_sys: dict[str, list] = {}
+    for r in items:
+        by_sys.setdefault(r["system"], []).append(r)
+    for v in by_sys.values():
+        rng.shuffle(v)
+    per = max(1, args.n // max(1, len(by_sys)))
+    items = [r for v in by_sys.values() for r in v[:per]]
     rng.shuffle(items)                      # blinding: system order is randomised
     OUT.parent.mkdir(parents=True, exist_ok=True)
     done = set()

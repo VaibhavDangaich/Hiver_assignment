@@ -13,9 +13,9 @@ Queue order (most decision-relevant first):
   3. everything else                      -- confirm-by-default, still shown
 
 Usage:
-  python scripts/adjudicate.py            # full queue
-  python scripts/adjudicate.py --only-contested
-  python scripts/adjudicate.py --resume
+  python scripts/adjudicate.py                 # full queue, auto-resumes if run before
+  python scripts/adjudicate.py --only-contested # just the 48 A/B disagreements
+  python scripts/adjudicate.py --restart        # ignore labelled.jsonl, relabel from scratch
 Keys: Enter accept | number pick intent | a/e force action | s skip | q save+quit
 """
 import argparse, json, pathlib, sys
@@ -50,11 +50,15 @@ def priority(r) -> int:
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--only-contested", action="store_true")
-    ap.add_argument("--resume", action="store_true")
+    ap.add_argument("--restart", action="store_true",
+                    help="ignore existing labelled.jsonl and relabel everything")
     args = ap.parse_args()
 
     rows = [json.loads(l) for l in open("data/golden/preannotated.jsonl")]
-    done = load_done() if args.resume else {}
+    # Always skip what's already labelled -- the file is opened in append mode,
+    # so failing to skip would write a second, conflicting row for the same
+    # case_id and silently double-count that case in every metric downstream.
+    done = {} if args.restart else load_done()
     queue = sorted((r for r in rows if r["case_id"] not in done), key=priority)
     if args.only_contested:
         queue = [r for r in queue if priority(r) == 0]
