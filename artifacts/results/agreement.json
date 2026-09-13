@@ -1,0 +1,17 @@
+{
+  "gold_provenance": {
+    "n": 0,
+    "note": "data/golden/labelled.jsonl absent -- run scripts/adjudicate.py. Until then all metrics use the A/B machine consensus and are labelled machine_consensus_provisional."
+  },
+  "machine_pass_agreement": {
+    "n": 220,
+    "intent_agreement": 0.85,
+    "action_agreement": 0.905,
+    "action_kappa": 0.718,
+    "note": "two independent pre-annotation passes; B never saw the brand's reply."
+  },
+  "judge_vs_human": {
+    "n": 0,
+    "note": "artifacts/results/human_reply_ratings.jsonl absent -- run scripts/rate_replies.py. Judge scores are UNVALIDATED until then."
+  }
+}

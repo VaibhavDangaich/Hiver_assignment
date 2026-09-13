@@ -2,6 +2,257 @@
   "gold_source": "machine_consensus_provisional",
   "n_cases": 172,
   "systems": {
+    "AGENT": {
+      "all": {
+        "n": 172,
+        "intent_accuracy": 0.907,
+        "intent_macro_f1": 0.899,
+        "routing": {
+          "n": 172,
+          "accuracy": 0.924,
+          "missed_escalation": 5,
+          "missed_escalation_rate": 0.029,
+          "needless_escalation": 8,
+          "needless_escalation_rate": 0.047,
+          "auto_rate": 0.174,
+          "gold_auto_rate": 0.192,
+          "auto_precision": 0.833,
+          "expected_cost": 0.337
+        },
+        "reply_quality_auto_only": {
+          "mean_grounded": 3.455,
+          "mean_helpful": 2.864,
+          "mean_tone": 3.636,
+          "mean_safe": 4.227,
+          "n_judged": 22,
+          "mean_composite": 3.545,
+          "unsupported_claim_rate": 0.364,
+          "worst_axis_counts": {
+            "safe": 1,
+            "tone": 4,
+            "grounded": 8,
+            "helpful": 9
+          }
+        },
+        "reply_quality_all_drafts": {
+          "mean_grounded": 2.924,
+          "mean_helpful": 3.033,
+          "mean_tone": 3.489,
+          "mean_safe": 3.587,
+          "n_judged": 92,
+          "mean_composite": 3.258,
+          "unsupported_claim_rate": 0.674,
+          "worst_axis_counts": {
+            "tone": 11,
+            "helpful": 22,
+            "grounded": 50,
+            "safe": 8
+          }
+        },
+        "per_class": {
+          "delivery_late": {
+            "precision": 0.923,
+            "recall": 0.857,
+            "f1": 0.889,
+            "support": 28
+          },
+          "delivery_not_received": {
+            "precision": 0.85,
+            "recall": 0.895,
+            "f1": 0.872,
+            "support": 19
+          },
+          "refund_status": {
+            "precision": 0.917,
+            "recall": 0.846,
+            "f1": 0.88,
+            "support": 13
+          },
+          "return_replace": {
+            "precision": 0.893,
+            "recall": 0.962,
+            "f1": 0.926,
+            "support": 26
+          },
+          "order_change": {
+            "precision": 1.0,
+            "recall": 0.857,
+            "f1": 0.923,
+            "support": 7
+          },
+          "account_access": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 14
+          },
+          "billing_charge": {
+            "precision": 0.938,
+            "recall": 0.938,
+            "f1": 0.938,
+            "support": 16
+          },
+          "membership_prime": {
+            "precision": 1.0,
+            "recall": 0.667,
+            "f1": 0.8,
+            "support": 3
+          },
+          "product_info": {
+            "precision": 0.857,
+            "recall": 1.0,
+            "f1": 0.923,
+            "support": 6
+          },
+          "tech_support": {
+            "precision": 0.9,
+            "recall": 1.0,
+            "f1": 0.947,
+            "support": 9
+          },
+          "fraud_report": {
+            "precision": 1.0,
+            "recall": 0.667,
+            "f1": 0.8,
+            "support": 6
+          },
+          "no_request": {
+            "precision": 0.852,
+            "recall": 0.92,
+            "f1": 0.885,
+            "support": 25
+          }
+        },
+        "top_confusions": [
+          [
+            [
+              "delivery_late",
+              "delivery_not_received"
+            ],
+            2
+          ],
+          [
+            [
+              "fraud_report",
+              "return_replace"
+            ],
+            2
+          ],
+          [
+            [
+              "billing_charge",
+              "no_request"
+            ],
+            1
+          ],
+          [
+            [
+              "no_request",
+              "refund_status"
+            ],
+            1
+          ],
+          [
+            [
+              "delivery_late",
+              "billing_charge"
+            ],
+            1
+          ],
+          [
+            [
+              "delivery_not_received",
+              "delivery_late"
+            ],
+            1
+          ],
+          [
+            [
+              "return_replace",
+              "no_request"
+            ],
+            1
+          ],
+          [
+            [
+              "delivery_not_received",
+              "no_request"
+            ],
+            1
+          ]
+        ]
+      },
+      "random": {
+        "n": 109,
+        "intent_accuracy": 0.899,
+        "intent_macro_f1": 0.934,
+        "routing": {
+          "n": 109,
+          "accuracy": 0.917,
+          "missed_escalation": 5,
+          "missed_escalation_rate": 0.046,
+          "needless_escalation": 4,
+          "needless_escalation_rate": 0.037,
+          "auto_rate": 0.22,
+          "gold_auto_rate": 0.211,
+          "auto_precision": 0.792,
+          "expected_cost": 0.495
+        },
+        "reply_quality_auto_only": {
+          "mean_grounded": 3.455,
+          "mean_helpful": 2.864,
+          "mean_tone": 3.636,
+          "mean_safe": 4.227,
+          "n_judged": 22,
+          "mean_composite": 3.545,
+          "unsupported_claim_rate": 0.364,
+          "worst_axis_counts": {
+            "safe": 1,
+            "tone": 4,
+            "grounded": 8,
+            "helpful": 9
+          }
+        },
+        "reply_quality_all_drafts": {
+          "mean_grounded": 2.924,
+          "mean_helpful": 3.033,
+          "mean_tone": 3.489,
+          "mean_safe": 3.587,
+          "n_judged": 92,
+          "mean_composite": 3.258,
+          "unsupported_claim_rate": 0.674,
+          "worst_axis_counts": {
+            "tone": 11,
+            "helpful": 22,
+            "grounded": 50,
+            "safe": 8
+          }
+        }
+      },
+      "enriched": {
+        "n": 63,
+        "intent_accuracy": 0.921,
+        "intent_macro_f1": 0.836,
+        "routing": {
+          "n": 63,
+          "accuracy": 0.937,
+          "missed_escalation": 0,
+          "missed_escalation_rate": 0.0,
+          "needless_escalation": 4,
+          "needless_escalation_rate": 0.063,
+          "auto_rate": 0.095,
+          "gold_auto_rate": 0.159,
+          "auto_precision": 1.0,
+          "expected_cost": 0.063
+        },
+        "reply_quality_auto_only": {
+          "n_judged": 0
+        },
+        "reply_quality_all_drafts": {
+          "n_judged": 0
+        }
+      }
+    },
     "B0_majority": {
       "all": {
         "n": 172,
@@ -426,10 +677,34 @@
           "expected_cost": 4.099
         },
         "reply_quality_auto_only": {
-          "n_judged": 0
+          "mean_grounded": 2.667,
+          "mean_helpful": 1.971,
+          "mean_tone": 2.696,
+          "mean_safe": 3.884,
+          "n_judged": 69,
+          "mean_composite": 2.804,
+          "unsupported_claim_rate": 0.464,
+          "worst_axis_counts": {
+            "grounded": 14,
+            "helpful": 40,
+            "tone": 13,
+            "safe": 1
+          }
         },
         "reply_quality_all_drafts": {
-          "n_judged": 0
+          "mean_grounded": 2.731,
+          "mean_helpful": 1.989,
+          "mean_tone": 2.774,
+          "mean_safe": 3.903,
+          "n_judged": 93,
+          "mean_composite": 2.849,
+          "unsupported_claim_rate": 0.473,
+          "worst_axis_counts": {
+            "grounded": 20,
+            "helpful": 58,
+            "tone": 13,
+            "safe": 1
+          }
         },
         "per_class": {
           "delivery_late": {
@@ -581,10 +856,34 @@
           "expected_cost": 5.523
         },
         "reply_quality_auto_only": {
-          "n_judged": 0
+          "mean_grounded": 2.667,
+          "mean_helpful": 1.971,
+          "mean_tone": 2.696,
+          "mean_safe": 3.884,
+          "n_judged": 69,
+          "mean_composite": 2.804,
+          "unsupported_claim_rate": 0.464,
+          "worst_axis_counts": {
+            "grounded": 14,
+            "helpful": 40,
+            "tone": 13,
+            "safe": 1
+          }
         },
         "reply_quality_all_drafts": {
-          "n_judged": 0
+          "mean_grounded": 2.731,
+          "mean_helpful": 1.989,
+          "mean_tone": 2.774,
+          "mean_safe": 3.903,
+          "n_judged": 93,
+          "mean_composite": 2.849,
+          "unsupported_claim_rate": 0.473,
+          "worst_axis_counts": {
+            "grounded": 20,
+            "helpful": 58,
+            "tone": 13,
+            "safe": 1
+          }
         }
       },
       "enriched": {

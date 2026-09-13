@@ -1,0 +1,356 @@
+# Report — AI support agent for AmazonHelp
+
+> **Status of the numbers in this report.** Gold labels are currently the
+> **consensus of two independent LLM pre-annotation passes** (85.0% intent
+> agreement, 90.5% action agreement, κ=0.72, n=220 — see §6), not yet a
+> human-adjudicated set. `scripts/adjudicate.py` is built and ready but
+> requires a human to actually run it — that is deliberate: see
+> [DECISIONS.md](DECISIONS.md) and §6. Reply-quality judging is at 185/344
+> (54%) scored — the CLI backend used to generate this ran into its own
+> account's session limits repeatedly and a background retry loop is filling
+> in the rest. Every number below is real, reproducible, and will update in
+> place (`make metrics && make agreement && python scripts/make_tables.py`)
+> as both processes finish. Nothing here is fabricated to look complete.
+
+## 1. Problem framing
+
+**Brand:** `AmazonHelp`, chosen by measurement, not popularity. I scored the
+top 40 brands in the TWCS dataset by what fraction of their public replies
+just deflect the customer elsewhere (DM/phone/email), because a brand that
+deflects leaves nothing to ground a reply-drafting agent in:
+
+| brand | reply pairs | deflection rate |
+|---|--:|--:|
+| `AppleSupport` (the obvious pick by volume) | 106,646 | **53.3%** |
+| `TMobileHelp` | 34,215 | **82.5%** |
+| **`AmazonHelp` (chosen)** | 168,814 | **5.3%** |
+
+AmazonHelp resolves in public, at scale, most of the time. That is the
+precondition for "draft a reply grounded in how this brand has historically
+resolved similar issues" to mean anything.
+
+**What "good" means here.** Not "sounds fluent." Three things, in order:
+1. **Never say something false or costly in public.** A wrong promise of a
+   refund, or a leaked order number, is worse than no reply.
+2. **Route correctly.** The routing decision (auto vs. escalate) is the
+   product — the reply text is secondary. A brand would rather have a
+   boring-but-safe router than a charming-but-reckless one.
+3. **When it does answer, sound like this brand**, not like a generic
+   helpful-assistant.
+
+**What I chose not to build**, and why:
+- *A supervised intent classifier.* I have ~220 labelled examples across 12
+  classes (~18/class) and they *are* the evaluation set. Training on them
+  would either contaminate the eval or produce a classifier too weak to be a
+  fair comparison — see [DECISIONS.md](DECISIONS.md) #15.
+- *Embedding-based retrieval.* TF-IDF (word + char n-gram) is deterministic,
+  needs no API key, and on 76k short, typo-heavy tweets, lexical overlap
+  carries most of the signal. Embeddings are the obvious next upgrade, not a
+  prerequisite — #14.
+- *An agent framework (LangGraph etc.).* The flow is linear — classify →
+  retrieve → draft → route — with one model call and no cycles or persisted
+  state. A framework adds install surface against the 15-minute reproduction
+  target and buys nothing a graph runtime is for — #16.
+- *Multilingual support.* AmazonHelp replies in ~12 languages; I scoped to
+  English only, which drops 51,661 of 168,814 reply pairs (30.6%) and is
+  itself a documented source of bias (§4, §5).
+- *A deployed UI.* The deliverables are a repo link and a report; a demo
+  front-end would spend the time budget on the thing not being graded.
+
+## 2. System
+
+```
+customer message ──▶ TF-IDF retrieval (top-4 similar historical cases)
+                              │
+                              ▼
+              one LLM call: classify intent + decide route + draft reply,
+              grounded in the retrieved cases, told never to invent specifics
+                              │
+                              ▼
+        deterministic guardrails (can only ever push toward escalate):
+        • policy-locked intents (refunds/returns/billing/account/fraud/
+          lost-package/order-change: never auto, regardless of confidence)
+        • retrieval grounding floor (best-match similarity < 0.13 → escalate)
+        • confidence floor (model self-reports < 0.55 → escalate)
+        • self-contradiction (model says "auto" but also names a rule → escalate)
+        • money/promise regex on the draft itself (refund/replace/deliver-by
+          language in an "auto" reply → forced to escalate)
+                              │
+                              ▼
+                    {intent, action, reason, reply}
+```
+
+One LLM call, not three, because the decisions are coupled: what you may
+safely say depends on whether a human must act. The guardrail layer is
+unit-tested against a fake LLM (`src/agent.py:demo()`) so the safety behaviour
+is provable without a network call — this is the artifact I'd actually want
+to see in a live code review.
+
+**Corpus:** 116,888 English (customer msg, brand reply) pairs, cleaned of
+Twitter furniture and PII (order IDs, phone numbers, emails, card-like digit
+runs — scrubbed at ingest, never stored). Split **temporally by customer**:
+the retrieval corpus is the earlier 70% of the timeline (76,181 pairs); the
+golden set is drawn from the later 30% (40,707 pairs held out), and every
+customer is forced entirely onto one side. A random split would let a
+customer's own thread be retrieved as "precedent" for their own message —
+this is the single decision that makes the retrieval numbers trustworthy.
+
+**Taxonomy:** 12 intents, induced from the data (KMeans scouting over 76k
+messages → too fuzzy to use directly, one cluster held 36% of traffic → an
+LLM open-coding pass over a 240-message sample naming *the request*, not the
+topic → 187 free-text codes collapsed into 11 actionable families + a 12th,
+`no_request`, because 22% of sampled traffic wants nothing actionable).
+Escalation policy (7 rules, a 10:1 cost model for missed-vs-needless
+escalation) was written down **before** any example was labelled — full text
+in `src/taxonomy.py`.
+
+## 3. Results vs. baselines
+
+Three baselines, not one:
+- **B0 majority (trivial):** predict the most common intent, always escalate.
+- **B1 keyword (simple):** hand-written regex rules over the same taxonomy —
+  what a team ships in an afternoon.
+- **B2 retrieval-copy:** classify by nearest-neighbour label, reply by
+  *copying* that neighbour's actual historical reply verbatim — tests whether
+  generation beats lookup for a brand this templated.
+
+Full tables (generated from `artifacts/results/metrics.json` by
+`scripts/make_tables.py` — not hand-typed):
+
+<!-- BEGIN GENERATED TABLES -->
+Gold labels: `machine_consensus_provisional` · 172 cases
+
+### Random slice (reflects real traffic mix)
+
+| system | n | intent acc | macro-F1 | routing acc | missed esc. | needless esc. | auto % | cost/case | reply quality |
+|---|--:|--:|--:|--:|--:|--:|--:|--:|--:|
+| B0 majority (trivial) | 109 | 0.229 | 0.034 | 0.789 | 0 (0.0%) | 23 (21.1%) | 0.0% | **0.21** | — |
+| B1 keyword (simple) | 109 | 0.385 | 0.352 | 0.541 | 46 (42.2%) | 4 (3.7%) | 59.6% | **4.26** | — |
+| B2 retrieval-copy | 109 | 0.385 | 0.352 | 0.431 | 60 (55.0%) | 2 (1.8%) | 74.3% | **5.52** | 2.85 |
+| **AGENT** | 109 | 0.899 | 0.934 | 0.917 | 5 (4.6%) | 4 (3.7%) | 22.0% | **0.49** | 3.26 |
+
+### Enriched slice (rare/hard intents, NOT representative — see caveat below)
+
+| system | n | intent acc | macro-F1 | routing acc | missed esc. | needless esc. | auto % | cost/case | reply quality |
+|---|--:|--:|--:|--:|--:|--:|--:|--:|--:|
+| B0 majority (trivial) | 63 | 0.048 | 0.008 | 0.841 | 0 (0.0%) | 10 (15.9%) | 0.0% | **0.16** | — |
+| B1 keyword (simple) | 63 | 0.540 | 0.335 | 0.794 | 9 (14.3%) | 4 (6.3%) | 23.8% | **1.49** | — |
+| B2 retrieval-copy | 63 | 0.540 | 0.335 | 0.794 | 10 (15.9%) | 3 (4.8%) | 27.0% | **1.64** | — |
+| **AGENT** | 63 | 0.921 | 0.836 | 0.937 | 0 (0.0%) | 4 (6.3%) | 9.5% | **0.06** | — |
+
+*cost/case* = expected cost under the declared 10:1 model (10 per missed
+escalation, 1 per needless). Lower is better. *reply quality* = judge
+composite (1–5, currently n=92/109 random-slice AGENT replies scored, backfill
+in progress) on cases that system actually auto-posts.
+
+### AGENT per-intent (all 172 items, both slices)
+
+| intent | precision | recall | F1 | support |
+|---|--:|--:|--:|--:|
+| `delivery_late` | 0.92 | 0.86 | 0.89 | 28 |
+| `return_replace` | 0.89 | 0.96 | 0.93 | 26 |
+| `no_request` | 0.85 | 0.92 | 0.89 | 25 |
+| `delivery_not_received` | 0.85 | 0.90 | 0.87 | 19 |
+| `billing_charge` | 0.94 | 0.94 | 0.94 | 16 |
+| `account_access` | 1.00 | 1.00 | 1.00 | 14 |
+| `refund_status` | 0.92 | 0.85 | 0.88 | 13 |
+| `tech_support` | 0.90 | 1.00 | 0.95 | 9 |
+| `order_change` | 1.00 | 0.86 | 0.92 | 7 |
+| `product_info` | 0.86 | 1.00 | 0.92 | 6 |
+| `fraud_report` | 1.00 | 0.67 | 0.80 | 6 |
+| `membership_prime` | 1.00 | 0.67 | 0.80 | 3 |
+<!-- END GENERATED TABLES -->
+
+**Reading this honestly, not triumphantly:** AGENT's intent accuracy and
+routing accuracy clearly beat all three baselines. But look at cost/case on
+the random slice: **AGENT (0.49) is *worse* than the trivial always-escalate
+baseline (0.21)**. That is not a bug in the table — it is the subject of §5.
+
+## 4. Failure analysis — top 5, with real examples
+
+**1. The agent over-promises relative to its own grounding.**
+`unsupported_claim` — a strict binary the judge sets when a draft states any
+specific fact/promise the retrieved precedent doesn't support — fires on
+**67%** of scored AGENT replies (n=92, provisional) vs. **47%** for the
+naive copy-baseline B2 (n=93). Real example:
+
+> customer: *"Same day shipping they said. WHERE MY PACKAGE AT"*
+> historical precedent found: *"I'm sorry your package is late! Can you share
+> your order or tracking number so we can look into this?"*
+> **AGENT draft:** *"I'm sorry your package is late! Can you share your order
+> or tracking number so we can look into this?"* → **auto**, but gold says
+> **escalate** (repeated-complaint signal missed — see failure #2).
+
+More damning example of the over-promise pattern itself:
+
+> customer: *"No, there was no notice. And I was here all day."*
+> precedent: *"We'd like to check into this with you in real time..."*
+> **AGENT draft:** *"So sorry this happened. We're getting a specialist on
+> this right away—they'll reach out shortly to make it right."*
+
+"Specialist," "right away," "make it right" are not in the precedent. The
+model is doing what helpful assistants do — sounding proactive — which is
+exactly wrong for a brand whose actual register is hedged and non-committal.
+**Hypothesis:** the prompt says "ground the reply" but doesn't forbid adding
+*warmth-motivated* specificity; the money/promise regex guardrail catches
+"refund/replace/deliver-by" but not "specialist will follow up."
+
+**2. Repeat/hostile signals are model-judgment only, not a deterministic
+guardrail — unlike everything else in the escalation policy.**
+5 of 109 random-slice cases are missed escalations, and every one I read is
+the same shape: a customer stating this is their *2nd/3rd* time asking, or
+capitalizing in frustration, which policy rule **E5_repeat_or_hostile**
+should catch:
+
+> *"2nd time in less than 6 months that my order has not been delivered on
+> time. Getting really tired of their lack of dependability."* → predicted
+> `delivery_late`/**auto**, gold says **escalate**.
+
+Unlike E1 (policy-locked intents), E2 (money-promise regex), E6 (grounding
+floor) and E7 (confidence floor), rules E4/E5 are **not backed by a
+deterministic check** in `agent.py` — they rely entirely on the model
+noticing and self-reporting. My own keyword baseline (`B1`) has an explicit
+`REPEAT` regex for exactly this ("again|still|2nd time|3rd time|...") that
+the agent's guardrail layer does not mirror. This is a real gap, not a
+one-off miss, and it is the single highest-value fix in §7.
+
+**3. `delivery_late` vs. `delivery_not_received` is a genuinely fuzzy
+boundary**, and both directions of confusion occur:
+
+> *"absolutely furious with your poor delivery. Waited in all day for item
+> (prime order) & it never turned up. Now says delivery will be tomorrow"*
+> gold=`delivery_late`, predicted=`delivery_not_received`.
+
+The definitions in `taxonomy.py` distinguish "late but still coming" from
+"marked delivered / attempted and gone," but a message can be *both* in the
+same sentence. **Hypothesis:** this needs either a merged intent or a
+secondary "delivery status" slot rather than a single label — the taxonomy
+itself, not the classifier, is under-specified here.
+
+**4. Single prior-turn context misreads follow-up messages.**
+Several `no_request` gold labels the agent gets wrong are messages that only
+make sense with more thread history than the one prior turn the system
+carries:
+
+> *"Required information has been submitted. Hope that this matters be
+> solved soon, not like the last one where no resolution was made."*
+> gold=`delivery_not_received`, predicted=`no_request`.
+
+The substantive complaint is in an earlier turn the agent never sees.
+**Hypothesis:** real AmazonHelp threads run longer than 2 turns; carrying
+only one turn of context is an explicit scope cut (§1) with a measurable cost.
+
+**5. Policy-locked intents suppress the auto-rate even where the model is
+excellent at them.** `return_replace`, `billing_charge`, `refund_status`,
+`account_access` all score F1 ≥ 0.88 per-class (table above) — the model
+*understands* these perfectly — but they are `ALWAYS_ESCALATE` by policy
+(§2), so AGENT only auto-handles 22% of random-slice traffic regardless. This
+isn't a model failure; it's the visible cost of a conservative policy choice,
+and it directly explains why the automation-coverage numbers look modest
+next to the accuracy numbers (§5).
+
+**A sixth, structural finding, not about the model:** the language filter
+that scoped the corpus to English is precision-oriented (100% precision,
+~20% recall loss on hand-read samples, `notes/lang_audit.md`), and every miss
+is a short fragment ("still not here", "fixed. thanks!"). The corpus — and
+therefore every number in this report — is skewed toward longer,
+self-contained messages. Terse real traffic is under-represented.
+
+## 5. What is misleading about my headline number
+
+Three things, and I'd rather name them than let a reader find them.
+
+**(a) "AGENT beats every baseline" is true and also the wrong summary.**
+Intent accuracy 89.9% vs. B0's 22.9% looks like a rout. But under my own
+declared 10:1 cost model, **B0 (always escalate) has lower cost than AGENT on
+the random slice** (0.21 vs. 0.49) — because AGENT takes the real risk of
+auto-handling 22% of traffic and gets 5 of those wrong, and each wrong one is
+priced at 10×. The reason this isn't actually a win for B0: **my cost model
+only prices routing *errors*, not the operational cost of escalation
+itself.** B0 sends 100% of traffic to a human; AGENT sends 78%. A model that
+prices "every escalation costs 1 unit of agent time, correct or not" would
+flip this comparison back in AGENT's favour, because it would credit the 24%
+of cases AGENT removes from the queue entirely. I did not build that model
+because it requires an assumption (the dollar cost of one agent-minute
+relative to one bad public reply) I have no data to calibrate — so I'm
+naming the gap instead of quietly picking a number that makes AGENT win.
+**Read the cost column together with the auto% column, never alone.**
+
+**(b) The enriched slice makes AGENT look better than the random slice does,
+partly by construction.** AGENT's enriched-slice cost (0.06) crushes its
+random-slice cost (0.49), and 4 of that slice's `ALWAYS_ESCALATE` intents
+(fraud/billing/account/returns) can score **zero missed escalations by
+policy**, regardless of what the model outputs — the guardrail forces
+escalate no matter what. Some of AGENT's best-looking numbers reflect a
+hard-coded policy decision, not something the model discovered. The random
+slice is the one that reflects real traffic; report the enriched slice as a
+diagnostic, never as the headline.
+
+**(c) The reply-quality numbers are the least trustworthy numbers in this
+report, for two compounding reasons.** First, judge coverage is 54%
+(185/344) at time of writing — a real, live number, but a partial sample.
+Second, and more important: I have **no completed evidence yet that the
+judge agrees with a human** (§6 — `rate_replies.py` has not been run). The
+`unsupported_claim` axis in particular looks strict enough that it may be
+over-flagging (§4 #1) — B2's copy-baseline gets flagged 47% of the time even
+though every B2 reply is a genuine historical Amazon reply, just to a
+slightly different case. Until a human has rated a blind sample, treat every
+quality number in §3 as a hypothesis the judge is producing, not a
+validated score.
+
+## 6. Gold-label and judge validation status
+
+Per the assignment: *"evidence of how well your judge agrees with a human."*
+That evidence cannot come from the judge. Two pieces are built and pending a
+human running them (deliberately — see [DECISIONS.md](DECISIONS.md)):
+
+- **`scripts/adjudicate.py`** — reviews all 220 golden items against two
+  independent LLM pre-annotation passes (pass A saw the brand's real reply,
+  pass B did not) and a written taxonomy/escalation policy. Machine-pass
+  agreement so far: **intent 85.0%, action 90.5% (κ=0.72), n=220** — a
+  measure of how contested the labelling problem is, not a substitute for
+  human labels. 48 items are flagged contested (A≠B) and 53 more are flagged
+  ambiguous by pass A; these 101 need a real decision, the remaining 119 are
+  quick confirms.
+- **`scripts/rate_replies.py`** — blind human rating (system identity
+  hidden) of reply quality on the same 4 axes + `unsupported_claim` binary
+  the judge uses, feeding `scripts/agreement.py` (Spearman ρ per axis,
+  Cohen's κ on the hallucination binary).
+
+Both are one command each; `make agreement` picks up whichever has been run.
+
+## 7. What I'd do next with one more week
+
+1. **Add a deterministic repeat/hostile guardrail** mirroring `B1`'s `REPEAT`
+   and `HUMAN_REQ` regexes into `agent.py`'s guardrail layer — the single
+   highest-value fix identified in failure analysis (#2), and unlike most
+   fixes here it needs no new data, just moving logic that already exists in
+   `baselines.py` into the guardrail path.
+2. **Run `adjudicate.py` and `rate_replies.py`** to replace the
+   machine-consensus provisional gold and the unvalidated judge with the
+   real thing — everything in this report is designed to flip to validated
+   numbers by rerunning two commands, not by rewriting the pipeline.
+3. **Add a second cost model** that prices per-escalation agent time, not
+   just routing errors, to resolve the ambiguity in §5(a) instead of just
+   naming it.
+4. **Split or add a slot for the `delivery_late`/`delivery_not_received`
+   boundary** (failure #3) — likely a taxonomy fix, not a model fix.
+5. **Carry 2–3 prior turns of thread context** instead of 1, to address
+   failure #4, and re-measure whether `no_request` misclassifications drop.
+6. **Replace the heuristic language filter** with a real langid model (even
+   a small fastText model) to recover the ~20% recall loss documented in
+   `notes/lang_audit.md`, and separately, build non-English retrieval corpora
+   for the languages with real volume (es/pt/fr/de/ja) rather than dropping
+   them.
+7. **Upgrade retrieval from TF-IDF to embeddings** and re-measure whether B2's
+   47% unsupported-claim rate (driven by genuine top-1 mismatches, §4) drops
+   — this is the most direct lever on retrieval precision.
+8. **Calibrate the `unsupported_claim` rubric** against the human-agreement
+   data from step 2 — if humans don't flag B2's near-miss retrievals as
+   "unsupported" at anywhere near 47%, the rubric's strictness needs
+   adjusting before the axis is trustworthy for a go/no-go decision.
+
+---
+See [DECISIONS.md](DECISIONS.md) for the full list of 22 non-obvious
+decisions, and [README.md](README.md) to reproduce every number above in
+under 15 minutes.
