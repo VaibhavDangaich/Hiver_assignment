@@ -18,7 +18,49 @@
     "note": "two independent pre-annotation passes; B never saw the brand's reply."
   },
   "judge_vs_human": {
-    "n": 0,
-    "note": "no overlap between human ratings and judged predictions"
+    "n": 20,
+    "per_axis": {
+      "grounded": {
+        "exact": 0.35,
+        "within_1": 0.6,
+        "mean_human": 1.45,
+        "mean_judge": 2.65,
+        "judge_bias": 1.2,
+        "spearman": 0.534
+      },
+      "helpful": {
+        "exact": 0.4,
+        "within_1": 0.7,
+        "mean_human": 2.05,
+        "mean_judge": 2.5,
+        "judge_bias": 0.45,
+        "spearman": 0.396
+      },
+      "tone": {
+        "exact": 0.4,
+        "within_1": 0.9,
+        "mean_human": 3.1,
+        "mean_judge": 3.0,
+        "judge_bias": -0.1,
+        "spearman": 0.405
+      },
+      "safe": {
+        "exact": 0.35,
+        "within_1": 0.75,
+        "mean_human": 2.85,
+        "mean_judge": 3.75,
+        "judge_bias": 0.9,
+        "spearman": 0.784
+      }
+    },
+    "composite_spearman": 0.709,
+    "unsupported_claim": {
+      "agreement": 0.75,
+      "cohens_kappa": 0.219,
+      "human_flagged": 19,
+      "judge_flagged": 14,
+      "judge_missed": 5,
+      "judge_false_alarm": 0
+    }
   }
 }

@@ -53,7 +53,18 @@ Top confusions (gold → predicted):
 
 ### Judge vs human
 
-> **Not yet measured.** no overlap between human ratings and judged predictions
+n = 20 blind human ratings.
+
+| axis | exact | within 1 | human mean | judge mean | judge bias | Spearman ρ |
+|---|--:|--:|--:|--:|--:|--:|
+| grounded | 0.35 | 0.60 | 1.45 | 2.65 | +1.20 | 0.53 |
+| helpful | 0.40 | 0.70 | 2.05 | 2.50 | +0.45 | 0.40 |
+| tone | 0.40 | 0.90 | 3.10 | 3.00 | -0.10 | 0.41 |
+| safe | 0.35 | 0.75 | 2.85 | 3.75 | +0.90 | 0.78 |
+
+Composite Spearman ρ = **0.71**.
+
+`unsupported_claim` binary: agreement 0.75, Cohen's κ = **0.22** (human flagged 19, judge flagged 14, judge missed 5, false alarms 0).
 
 Two independent pre-annotation passes agreed on intent 85.0% and on routing 90.5% (κ=0.72, n=220).
 
