@@ -78,7 +78,7 @@ class ReplyJudge:
         p = RUBRIC.format(msg=msg, reference=reference, reply=reply,
                           ctx=f"EARLIER IN THREAD: {prior_turn}\n" if prior_turn else "")
         raw = self.llm.complete(p, system="You are a meticulous QA auditor. Output JSON only.",
-                                model=self.model, max_tokens=1000)
+                                model=self.model, max_tokens=1500)
         try:
             d = extract_json(raw)
         except ValueError:

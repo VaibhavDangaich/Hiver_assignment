@@ -1,133 +1,168 @@
 {
-  "gold_source": "machine_consensus_provisional",
-  "n_cases": 172,
+  "gold_source": "human_adjudicated",
+  "n_cases": 220,
   "systems": {
     "AGENT": {
       "all": {
-        "n": 172,
-        "intent_accuracy": 0.907,
-        "intent_macro_f1": 0.899,
+        "n": 220,
+        "intent_accuracy": 0.827,
+        "intent_macro_f1": 0.807,
         "routing": {
-          "n": 172,
-          "accuracy": 0.924,
-          "missed_escalation": 5,
-          "missed_escalation_rate": 0.029,
-          "needless_escalation": 8,
-          "needless_escalation_rate": 0.047,
-          "auto_rate": 0.174,
-          "gold_auto_rate": 0.192,
-          "auto_precision": 0.833,
-          "expected_cost": 0.337
+          "n": 220,
+          "accuracy": 0.873,
+          "missed_escalation": 10,
+          "missed_escalation_rate": 0.045,
+          "needless_escalation": 18,
+          "needless_escalation_rate": 0.082,
+          "auto_rate": 0.182,
+          "gold_auto_rate": 0.218,
+          "auto_precision": 0.75,
+          "expected_cost": 0.536
         },
         "reply_quality_auto_only": {
-          "mean_grounded": 3.267,
-          "mean_helpful": 2.833,
-          "mean_tone": 3.6,
-          "mean_safe": 4.167,
-          "n_judged": 30,
-          "mean_composite": 3.467,
-          "unsupported_claim_rate": 0.433,
+          "mean_grounded": 3.275,
+          "mean_helpful": 2.825,
+          "mean_tone": 3.65,
+          "mean_safe": 4.2,
+          "n_judged": 40,
+          "mean_composite": 3.487,
+          "unsupported_claim_rate": 0.4,
           "worst_axis_counts": {
-            "safe": 1,
-            "tone": 5,
-            "grounded": 12,
-            "helpful": 12
+            "grounded": 16,
+            "helpful": 17,
+            "tone": 6,
+            "safe": 1
           }
         },
         "reply_quality_all_drafts": {
-          "mean_grounded": 2.762,
-          "mean_helpful": 3.07,
-          "mean_tone": 3.529,
-          "mean_safe": 3.558,
-          "n_judged": 172,
-          "mean_composite": 3.23,
-          "unsupported_claim_rate": 0.727,
+          "mean_grounded": 2.745,
+          "mean_helpful": 3.023,
+          "mean_tone": 3.559,
+          "mean_safe": 3.568,
+          "n_judged": 220,
+          "mean_composite": 3.224,
+          "unsupported_claim_rate": 0.714,
           "worst_axis_counts": {
-            "tone": 14,
-            "helpful": 36,
-            "grounded": 106,
-            "safe": 15
+            "grounded": 134,
+            "helpful": 47,
+            "tone": 17,
+            "safe": 21
           }
         },
         "per_class": {
           "delivery_late": {
-            "precision": 0.923,
-            "recall": 0.857,
-            "f1": 0.889,
-            "support": 28
+            "precision": 0.889,
+            "recall": 0.842,
+            "f1": 0.865,
+            "support": 38
           },
           "delivery_not_received": {
-            "precision": 0.85,
-            "recall": 0.895,
-            "f1": 0.872,
-            "support": 19
+            "precision": 0.773,
+            "recall": 0.81,
+            "f1": 0.791,
+            "support": 21
           },
           "refund_status": {
-            "precision": 0.917,
-            "recall": 0.846,
-            "f1": 0.88,
-            "support": 13
+            "precision": 0.857,
+            "recall": 0.8,
+            "f1": 0.828,
+            "support": 15
           },
           "return_replace": {
-            "precision": 0.893,
-            "recall": 0.962,
-            "f1": 0.926,
-            "support": 26
+            "precision": 0.781,
+            "recall": 0.926,
+            "f1": 0.847,
+            "support": 27
           },
           "order_change": {
-            "precision": 1.0,
-            "recall": 0.857,
-            "f1": 0.923,
-            "support": 7
+            "precision": 0.857,
+            "recall": 0.6,
+            "f1": 0.706,
+            "support": 10
           },
           "account_access": {
-            "precision": 1.0,
-            "recall": 1.0,
-            "f1": 1.0,
-            "support": 14
-          },
-          "billing_charge": {
             "precision": 0.938,
             "recall": 0.938,
             "f1": 0.938,
             "support": 16
           },
+          "billing_charge": {
+            "precision": 0.941,
+            "recall": 0.889,
+            "f1": 0.914,
+            "support": 18
+          },
           "membership_prime": {
-            "precision": 1.0,
-            "recall": 0.667,
-            "f1": 0.8,
-            "support": 3
+            "precision": 0.75,
+            "recall": 0.75,
+            "f1": 0.75,
+            "support": 4
           },
           "product_info": {
-            "precision": 0.857,
-            "recall": 1.0,
-            "f1": 0.923,
-            "support": 6
+            "precision": 0.778,
+            "recall": 0.583,
+            "f1": 0.667,
+            "support": 12
           },
           "tech_support": {
-            "precision": 0.9,
-            "recall": 1.0,
-            "f1": 0.947,
-            "support": 9
+            "precision": 0.824,
+            "recall": 0.933,
+            "f1": 0.875,
+            "support": 15
           },
           "fraud_report": {
-            "precision": 1.0,
-            "recall": 0.667,
-            "f1": 0.8,
-            "support": 6
+            "precision": 0.714,
+            "recall": 0.714,
+            "f1": 0.714,
+            "support": 7
           },
           "no_request": {
-            "precision": 0.852,
-            "recall": 0.92,
-            "f1": 0.885,
-            "support": 25
+            "precision": 0.769,
+            "recall": 0.811,
+            "f1": 0.789,
+            "support": 37
           }
         },
         "top_confusions": [
           [
             [
-              "delivery_late",
+              "product_info",
+              "no_request"
+            ],
+            3
+          ],
+          [
+            [
+              "refund_status",
               "delivery_not_received"
+            ],
+            2
+          ],
+          [
+            [
+              "delivery_not_received",
+              "no_request"
+            ],
+            2
+          ],
+          [
+            [
+              "order_change",
+              "delivery_late"
+            ],
+            2
+          ],
+          [
+            [
+              "no_request",
+              "refund_status"
+            ],
+            2
+          ],
+          [
+            [
+              "delivery_late",
+              "no_request"
             ],
             2
           ],
@@ -140,137 +175,102 @@
           ],
           [
             [
-              "billing_charge",
-              "no_request"
-            ],
-            1
-          ],
-          [
-            [
-              "no_request",
-              "refund_status"
-            ],
-            1
-          ],
-          [
-            [
               "delivery_late",
-              "billing_charge"
+              "delivery_not_received"
             ],
-            1
-          ],
-          [
-            [
-              "delivery_not_received",
-              "delivery_late"
-            ],
-            1
-          ],
-          [
-            [
-              "return_replace",
-              "no_request"
-            ],
-            1
-          ],
-          [
-            [
-              "delivery_not_received",
-              "no_request"
-            ],
-            1
+            2
           ]
         ]
       },
       "random": {
-        "n": 109,
-        "intent_accuracy": 0.899,
-        "intent_macro_f1": 0.934,
+        "n": 150,
+        "intent_accuracy": 0.793,
+        "intent_macro_f1": 0.741,
         "routing": {
-          "n": 109,
-          "accuracy": 0.917,
-          "missed_escalation": 5,
-          "missed_escalation_rate": 0.046,
-          "needless_escalation": 4,
-          "needless_escalation_rate": 0.037,
-          "auto_rate": 0.22,
-          "gold_auto_rate": 0.211,
-          "auto_precision": 0.792,
-          "expected_cost": 0.495
+          "n": 150,
+          "accuracy": 0.853,
+          "missed_escalation": 9,
+          "missed_escalation_rate": 0.06,
+          "needless_escalation": 13,
+          "needless_escalation_rate": 0.087,
+          "auto_rate": 0.213,
+          "gold_auto_rate": 0.24,
+          "auto_precision": 0.719,
+          "expected_cost": 0.687
         },
         "reply_quality_auto_only": {
-          "mean_grounded": 3.333,
-          "mean_helpful": 2.833,
-          "mean_tone": 3.667,
-          "mean_safe": 4.208,
-          "n_judged": 24,
-          "mean_composite": 3.51,
-          "unsupported_claim_rate": 0.417,
+          "mean_grounded": 3.406,
+          "mean_helpful": 2.844,
+          "mean_tone": 3.75,
+          "mean_safe": 4.281,
+          "n_judged": 32,
+          "mean_composite": 3.57,
+          "unsupported_claim_rate": 0.375,
           "worst_axis_counts": {
-            "safe": 1,
-            "tone": 4,
-            "grounded": 10,
-            "helpful": 9
+            "grounded": 12,
+            "helpful": 14,
+            "tone": 5,
+            "safe": 1
           }
         },
         "reply_quality_all_drafts": {
-          "mean_grounded": 2.872,
-          "mean_helpful": 3.073,
-          "mean_tone": 3.532,
-          "mean_safe": 3.596,
-          "n_judged": 109,
-          "mean_composite": 3.268,
-          "unsupported_claim_rate": 0.697,
+          "mean_grounded": 2.82,
+          "mean_helpful": 3.0,
+          "mean_tone": 3.573,
+          "mean_safe": 3.593,
+          "n_judged": 150,
+          "mean_composite": 3.247,
+          "unsupported_claim_rate": 0.7,
           "worst_axis_counts": {
-            "tone": 12,
-            "helpful": 23,
-            "grounded": 65,
-            "safe": 8
+            "grounded": 86,
+            "helpful": 34,
+            "tone": 15,
+            "safe": 14
           }
         }
       },
       "enriched": {
-        "n": 63,
-        "intent_accuracy": 0.921,
-        "intent_macro_f1": 0.836,
+        "n": 70,
+        "intent_accuracy": 0.9,
+        "intent_macro_f1": 0.862,
         "routing": {
-          "n": 63,
-          "accuracy": 0.937,
-          "missed_escalation": 0,
-          "missed_escalation_rate": 0.0,
-          "needless_escalation": 4,
-          "needless_escalation_rate": 0.063,
-          "auto_rate": 0.095,
-          "gold_auto_rate": 0.159,
-          "auto_precision": 1.0,
-          "expected_cost": 0.063
+          "n": 70,
+          "accuracy": 0.914,
+          "missed_escalation": 1,
+          "missed_escalation_rate": 0.014,
+          "needless_escalation": 5,
+          "needless_escalation_rate": 0.071,
+          "auto_rate": 0.114,
+          "gold_auto_rate": 0.171,
+          "auto_precision": 0.875,
+          "expected_cost": 0.214
         },
         "reply_quality_auto_only": {
-          "mean_grounded": 3.0,
-          "mean_helpful": 2.833,
-          "mean_tone": 3.333,
-          "mean_safe": 4.0,
-          "n_judged": 6,
-          "mean_composite": 3.292,
+          "mean_grounded": 2.75,
+          "mean_helpful": 2.75,
+          "mean_tone": 3.25,
+          "mean_safe": 3.875,
+          "n_judged": 8,
+          "mean_composite": 3.156,
           "unsupported_claim_rate": 0.5,
           "worst_axis_counts": {
-            "grounded": 2,
+            "grounded": 4,
             "helpful": 3,
             "tone": 1
           }
         },
         "reply_quality_all_drafts": {
-          "mean_grounded": 2.571,
-          "mean_helpful": 3.063,
-          "mean_tone": 3.524,
-          "mean_safe": 3.492,
-          "n_judged": 63,
-          "mean_composite": 3.163,
-          "unsupported_claim_rate": 0.778,
+          "mean_grounded": 2.586,
+          "mean_helpful": 3.071,
+          "mean_tone": 3.529,
+          "mean_safe": 3.514,
+          "n_judged": 70,
+          "mean_composite": 3.175,
+          "unsupported_claim_rate": 0.743,
           "worst_axis_counts": {
-            "grounded": 41,
-            "helpful": 13,
+            "grounded": 48,
             "tone": 2,
+            "helpful": 13,
             "safe": 7
           }
         }
@@ -278,20 +278,20 @@
     },
     "B0_majority": {
       "all": {
-        "n": 172,
-        "intent_accuracy": 0.163,
-        "intent_macro_f1": 0.023,
+        "n": 220,
+        "intent_accuracy": 0.173,
+        "intent_macro_f1": 0.025,
         "routing": {
-          "n": 172,
-          "accuracy": 0.808,
+          "n": 220,
+          "accuracy": 0.782,
           "missed_escalation": 0,
           "missed_escalation_rate": 0.0,
-          "needless_escalation": 33,
-          "needless_escalation_rate": 0.192,
+          "needless_escalation": 48,
+          "needless_escalation_rate": 0.218,
           "auto_rate": 0.0,
-          "gold_auto_rate": 0.192,
+          "gold_auto_rate": 0.218,
           "auto_precision": 0.0,
-          "expected_cost": 0.192
+          "expected_cost": 0.218
         },
         "reply_quality_auto_only": {
           "n_judged": 0
@@ -301,152 +301,152 @@
         },
         "per_class": {
           "delivery_late": {
-            "precision": 0.163,
+            "precision": 0.173,
             "recall": 1.0,
-            "f1": 0.28,
-            "support": 28
+            "f1": 0.295,
+            "support": 38
           },
           "delivery_not_received": {
             "precision": 0.0,
             "recall": 0.0,
             "f1": 0.0,
-            "support": 19
+            "support": 21
           },
           "refund_status": {
             "precision": 0.0,
             "recall": 0.0,
             "f1": 0.0,
-            "support": 13
+            "support": 15
           },
           "return_replace": {
             "precision": 0.0,
             "recall": 0.0,
             "f1": 0.0,
-            "support": 26
+            "support": 27
           },
           "order_change": {
             "precision": 0.0,
             "recall": 0.0,
             "f1": 0.0,
-            "support": 7
+            "support": 10
           },
           "account_access": {
             "precision": 0.0,
             "recall": 0.0,
             "f1": 0.0,
-            "support": 14
+            "support": 16
           },
           "billing_charge": {
             "precision": 0.0,
             "recall": 0.0,
             "f1": 0.0,
-            "support": 16
+            "support": 18
           },
           "membership_prime": {
             "precision": 0.0,
             "recall": 0.0,
             "f1": 0.0,
-            "support": 3
+            "support": 4
           },
           "product_info": {
             "precision": 0.0,
             "recall": 0.0,
             "f1": 0.0,
-            "support": 6
+            "support": 12
           },
           "tech_support": {
             "precision": 0.0,
             "recall": 0.0,
             "f1": 0.0,
-            "support": 9
+            "support": 15
           },
           "fraud_report": {
             "precision": 0.0,
             "recall": 0.0,
             "f1": 0.0,
-            "support": 6
+            "support": 7
           },
           "no_request": {
             "precision": 0.0,
             "recall": 0.0,
             "f1": 0.0,
-            "support": 25
+            "support": 37
           }
         },
         "top_confusions": [
           [
             [
-              "return_replace",
-              "delivery_late"
-            ],
-            26
-          ],
-          [
-            [
               "no_request",
               "delivery_late"
             ],
-            25
+            37
+          ],
+          [
+            [
+              "return_replace",
+              "delivery_late"
+            ],
+            27
           ],
           [
             [
               "delivery_not_received",
               "delivery_late"
             ],
-            19
+            21
           ],
           [
             [
               "billing_charge",
               "delivery_late"
             ],
-            16
+            18
           ],
           [
             [
               "account_access",
               "delivery_late"
             ],
-            14
-          ],
-          [
-            [
-              "refund_status",
-              "delivery_late"
-            ],
-            13
+            16
           ],
           [
             [
               "tech_support",
               "delivery_late"
             ],
-            9
+            15
           ],
           [
             [
-              "order_change",
+              "refund_status",
               "delivery_late"
             ],
-            7
+            15
+          ],
+          [
+            [
+              "product_info",
+              "delivery_late"
+            ],
+            12
           ]
         ]
       },
       "random": {
-        "n": 109,
-        "intent_accuracy": 0.229,
-        "intent_macro_f1": 0.034,
+        "n": 150,
+        "intent_accuracy": 0.233,
+        "intent_macro_f1": 0.032,
         "routing": {
-          "n": 109,
-          "accuracy": 0.789,
+          "n": 150,
+          "accuracy": 0.76,
           "missed_escalation": 0,
           "missed_escalation_rate": 0.0,
-          "needless_escalation": 23,
-          "needless_escalation_rate": 0.211,
+          "needless_escalation": 36,
+          "needless_escalation_rate": 0.24,
           "auto_rate": 0.0,
-          "gold_auto_rate": 0.211,
+          "gold_auto_rate": 0.24,
           "auto_precision": 0.0,
-          "expected_cost": 0.211
+          "expected_cost": 0.24
         },
         "reply_quality_auto_only": {
           "n_judged": 0
@@ -456,20 +456,20 @@
         }
       },
       "enriched": {
-        "n": 63,
-        "intent_accuracy": 0.048,
-        "intent_macro_f1": 0.008,
+        "n": 70,
+        "intent_accuracy": 0.043,
+        "intent_macro_f1": 0.007,
         "routing": {
-          "n": 63,
-          "accuracy": 0.841,
+          "n": 70,
+          "accuracy": 0.829,
           "missed_escalation": 0,
           "missed_escalation_rate": 0.0,
-          "needless_escalation": 10,
-          "needless_escalation_rate": 0.159,
+          "needless_escalation": 12,
+          "needless_escalation_rate": 0.171,
           "auto_rate": 0.0,
-          "gold_auto_rate": 0.159,
+          "gold_auto_rate": 0.171,
           "auto_precision": 0.0,
-          "expected_cost": 0.159
+          "expected_cost": 0.171
         },
         "reply_quality_auto_only": {
           "n_judged": 0
@@ -481,20 +481,20 @@
     },
     "B1_keyword": {
       "all": {
-        "n": 172,
-        "intent_accuracy": 0.442,
-        "intent_macro_f1": 0.446,
+        "n": 220,
+        "intent_accuracy": 0.414,
+        "intent_macro_f1": 0.415,
         "routing": {
-          "n": 172,
-          "accuracy": 0.634,
-          "missed_escalation": 55,
-          "missed_escalation_rate": 0.32,
-          "needless_escalation": 8,
-          "needless_escalation_rate": 0.047,
-          "auto_rate": 0.465,
-          "gold_auto_rate": 0.192,
-          "auto_precision": 0.312,
-          "expected_cost": 3.244
+          "n": 220,
+          "accuracy": 0.609,
+          "missed_escalation": 76,
+          "missed_escalation_rate": 0.345,
+          "needless_escalation": 10,
+          "needless_escalation_rate": 0.045,
+          "auto_rate": 0.518,
+          "gold_auto_rate": 0.218,
+          "auto_precision": 0.333,
+          "expected_cost": 3.5
         },
         "reply_quality_auto_only": {
           "n_judged": 0
@@ -504,76 +504,76 @@
         },
         "per_class": {
           "delivery_late": {
-            "precision": 0.625,
-            "recall": 0.179,
-            "f1": 0.278,
-            "support": 28
+            "precision": 0.7,
+            "recall": 0.184,
+            "f1": 0.292,
+            "support": 38
           },
           "delivery_not_received": {
-            "precision": 0.5,
-            "recall": 0.053,
-            "f1": 0.095,
-            "support": 19
+            "precision": 0.333,
+            "recall": 0.048,
+            "f1": 0.083,
+            "support": 21
           },
           "refund_status": {
-            "precision": 0.75,
-            "recall": 0.692,
-            "f1": 0.72,
-            "support": 13
+            "precision": 0.714,
+            "recall": 0.667,
+            "f1": 0.69,
+            "support": 15
           },
           "return_replace": {
-            "precision": 0.733,
-            "recall": 0.423,
-            "f1": 0.537,
-            "support": 26
+            "precision": 0.688,
+            "recall": 0.407,
+            "f1": 0.512,
+            "support": 27
           },
           "order_change": {
-            "precision": 0.545,
-            "recall": 0.857,
-            "f1": 0.667,
-            "support": 7
+            "precision": 0.5,
+            "recall": 0.6,
+            "f1": 0.545,
+            "support": 10
           },
           "account_access": {
             "precision": 1.0,
-            "recall": 0.429,
-            "f1": 0.6,
-            "support": 14
+            "recall": 0.375,
+            "f1": 0.545,
+            "support": 16
           },
           "billing_charge": {
             "precision": 0.611,
-            "recall": 0.688,
-            "f1": 0.647,
-            "support": 16
+            "recall": 0.611,
+            "f1": 0.611,
+            "support": 18
           },
           "membership_prime": {
-            "precision": 0.5,
-            "recall": 0.333,
-            "f1": 0.4,
-            "support": 3
+            "precision": 0.333,
+            "recall": 0.25,
+            "f1": 0.286,
+            "support": 4
           },
           "product_info": {
-            "precision": 0.333,
+            "precision": 0.5,
             "recall": 0.167,
-            "f1": 0.222,
-            "support": 6
+            "f1": 0.25,
+            "support": 12
           },
           "tech_support": {
-            "precision": 0.267,
-            "recall": 0.444,
-            "f1": 0.333,
-            "support": 9
+            "precision": 0.35,
+            "recall": 0.467,
+            "f1": 0.4,
+            "support": 15
           },
           "fraud_report": {
-            "precision": 0.4,
-            "recall": 0.667,
-            "f1": 0.5,
-            "support": 6
+            "precision": 0.308,
+            "recall": 0.571,
+            "f1": 0.4,
+            "support": 7
           },
           "no_request": {
-            "precision": 0.243,
-            "recall": 0.68,
-            "f1": 0.358,
-            "support": 25
+            "precision": 0.248,
+            "recall": 0.676,
+            "f1": 0.362,
+            "support": 37
           }
         },
         "top_confusions": [
@@ -582,14 +582,21 @@
               "delivery_late",
               "no_request"
             ],
-            17
+            25
           ],
           [
             [
               "delivery_not_received",
               "no_request"
             ],
-            9
+            11
+          ],
+          [
+            [
+              "account_access",
+              "no_request"
+            ],
+            10
           ],
           [
             [
@@ -600,10 +607,17 @@
           ],
           [
             [
-              "account_access",
+              "tech_support",
               "no_request"
             ],
-            8
+            7
+          ],
+          [
+            [
+              "product_info",
+              "no_request"
+            ],
+            5
           ],
           [
             [
@@ -614,42 +628,28 @@
           ],
           [
             [
-              "tech_support",
-              "no_request"
-            ],
-            4
-          ],
-          [
-            [
-              "billing_charge",
-              "no_request"
-            ],
-            3
-          ],
-          [
-            [
               "return_replace",
               "fraud_report"
             ],
-            3
+            4
           ]
         ]
       },
       "random": {
-        "n": 109,
-        "intent_accuracy": 0.385,
-        "intent_macro_f1": 0.352,
+        "n": 150,
+        "intent_accuracy": 0.367,
+        "intent_macro_f1": 0.322,
         "routing": {
-          "n": 109,
-          "accuracy": 0.541,
-          "missed_escalation": 46,
-          "missed_escalation_rate": 0.422,
-          "needless_escalation": 4,
-          "needless_escalation_rate": 0.037,
-          "auto_rate": 0.596,
-          "gold_auto_rate": 0.211,
-          "auto_precision": 0.292,
-          "expected_cost": 4.257
+          "n": 150,
+          "accuracy": 0.52,
+          "missed_escalation": 66,
+          "missed_escalation_rate": 0.44,
+          "needless_escalation": 6,
+          "needless_escalation_rate": 0.04,
+          "auto_rate": 0.64,
+          "gold_auto_rate": 0.24,
+          "auto_precision": 0.312,
+          "expected_cost": 4.44
         },
         "reply_quality_auto_only": {
           "n_judged": 0
@@ -659,20 +659,20 @@
         }
       },
       "enriched": {
-        "n": 63,
-        "intent_accuracy": 0.54,
-        "intent_macro_f1": 0.335,
+        "n": 70,
+        "intent_accuracy": 0.514,
+        "intent_macro_f1": 0.349,
         "routing": {
-          "n": 63,
-          "accuracy": 0.794,
-          "missed_escalation": 9,
+          "n": 70,
+          "accuracy": 0.8,
+          "missed_escalation": 10,
           "missed_escalation_rate": 0.143,
           "needless_escalation": 4,
-          "needless_escalation_rate": 0.063,
-          "auto_rate": 0.238,
-          "gold_auto_rate": 0.159,
-          "auto_precision": 0.4,
-          "expected_cost": 1.492
+          "needless_escalation_rate": 0.057,
+          "auto_rate": 0.257,
+          "gold_auto_rate": 0.171,
+          "auto_precision": 0.444,
+          "expected_cost": 1.486
         },
         "reply_quality_auto_only": {
           "n_judged": 0
@@ -684,123 +684,123 @@
     },
     "B2_retrieval": {
       "all": {
-        "n": 172,
-        "intent_accuracy": 0.442,
-        "intent_macro_f1": 0.446,
+        "n": 220,
+        "intent_accuracy": 0.414,
+        "intent_macro_f1": 0.415,
         "routing": {
-          "n": 172,
-          "accuracy": 0.564,
-          "missed_escalation": 70,
-          "missed_escalation_rate": 0.407,
-          "needless_escalation": 5,
-          "needless_escalation_rate": 0.029,
-          "auto_rate": 0.57,
-          "gold_auto_rate": 0.192,
-          "auto_precision": 0.286,
-          "expected_cost": 4.099
+          "n": 220,
+          "accuracy": 0.527,
+          "missed_escalation": 97,
+          "missed_escalation_rate": 0.441,
+          "needless_escalation": 7,
+          "needless_escalation_rate": 0.032,
+          "auto_rate": 0.627,
+          "gold_auto_rate": 0.218,
+          "auto_precision": 0.297,
+          "expected_cost": 4.441
         },
         "reply_quality_auto_only": {
-          "mean_grounded": 2.582,
-          "mean_helpful": 1.929,
-          "mean_tone": 2.643,
-          "mean_safe": 3.806,
-          "n_judged": 98,
-          "mean_composite": 2.74,
-          "unsupported_claim_rate": 0.48,
+          "mean_grounded": 2.565,
+          "mean_helpful": 1.935,
+          "mean_tone": 2.696,
+          "mean_safe": 3.812,
+          "n_judged": 138,
+          "mean_composite": 2.752,
+          "unsupported_claim_rate": 0.507,
           "worst_axis_counts": {
-            "grounded": 22,
-            "helpful": 58,
-            "tone": 16,
-            "safe": 1
+            "helpful": 78,
+            "safe": 3,
+            "grounded": 34,
+            "tone": 22
           }
         },
         "reply_quality_all_drafts": {
-          "mean_grounded": 2.576,
-          "mean_helpful": 1.924,
-          "mean_tone": 2.669,
-          "mean_safe": 3.744,
-          "n_judged": 172,
-          "mean_composite": 2.728,
-          "unsupported_claim_rate": 0.523,
+          "mean_grounded": 2.568,
+          "mean_helpful": 1.909,
+          "mean_tone": 2.691,
+          "mean_safe": 3.782,
+          "n_judged": 220,
+          "mean_composite": 2.737,
+          "unsupported_claim_rate": 0.532,
           "worst_axis_counts": {
-            "grounded": 37,
-            "helpful": 108,
-            "tone": 23,
-            "safe": 3
+            "helpful": 134,
+            "safe": 5,
+            "grounded": 50,
+            "tone": 30
           }
         },
         "per_class": {
           "delivery_late": {
-            "precision": 0.625,
-            "recall": 0.179,
-            "f1": 0.278,
-            "support": 28
+            "precision": 0.7,
+            "recall": 0.184,
+            "f1": 0.292,
+            "support": 38
           },
           "delivery_not_received": {
-            "precision": 0.5,
-            "recall": 0.053,
-            "f1": 0.095,
-            "support": 19
+            "precision": 0.333,
+            "recall": 0.048,
+            "f1": 0.083,
+            "support": 21
           },
           "refund_status": {
-            "precision": 0.75,
-            "recall": 0.692,
-            "f1": 0.72,
-            "support": 13
+            "precision": 0.714,
+            "recall": 0.667,
+            "f1": 0.69,
+            "support": 15
           },
           "return_replace": {
-            "precision": 0.733,
-            "recall": 0.423,
-            "f1": 0.537,
-            "support": 26
+            "precision": 0.688,
+            "recall": 0.407,
+            "f1": 0.512,
+            "support": 27
           },
           "order_change": {
-            "precision": 0.545,
-            "recall": 0.857,
-            "f1": 0.667,
-            "support": 7
+            "precision": 0.5,
+            "recall": 0.6,
+            "f1": 0.545,
+            "support": 10
           },
           "account_access": {
             "precision": 1.0,
-            "recall": 0.429,
-            "f1": 0.6,
-            "support": 14
+            "recall": 0.375,
+            "f1": 0.545,
+            "support": 16
           },
           "billing_charge": {
             "precision": 0.611,
-            "recall": 0.688,
-            "f1": 0.647,
-            "support": 16
+            "recall": 0.611,
+            "f1": 0.611,
+            "support": 18
           },
           "membership_prime": {
-            "precision": 0.5,
-            "recall": 0.333,
-            "f1": 0.4,
-            "support": 3
+            "precision": 0.333,
+            "recall": 0.25,
+            "f1": 0.286,
+            "support": 4
           },
           "product_info": {
-            "precision": 0.333,
+            "precision": 0.5,
             "recall": 0.167,
-            "f1": 0.222,
-            "support": 6
+            "f1": 0.25,
+            "support": 12
           },
           "tech_support": {
-            "precision": 0.267,
-            "recall": 0.444,
-            "f1": 0.333,
-            "support": 9
+            "precision": 0.35,
+            "recall": 0.467,
+            "f1": 0.4,
+            "support": 15
           },
           "fraud_report": {
-            "precision": 0.4,
-            "recall": 0.667,
-            "f1": 0.5,
-            "support": 6
+            "precision": 0.308,
+            "recall": 0.571,
+            "f1": 0.4,
+            "support": 7
           },
           "no_request": {
-            "precision": 0.243,
-            "recall": 0.68,
-            "f1": 0.358,
-            "support": 25
+            "precision": 0.248,
+            "recall": 0.676,
+            "f1": 0.362,
+            "support": 37
           }
         },
         "top_confusions": [
@@ -809,14 +809,21 @@
               "delivery_late",
               "no_request"
             ],
-            17
+            25
           ],
           [
             [
               "delivery_not_received",
               "no_request"
             ],
-            9
+            11
+          ],
+          [
+            [
+              "account_access",
+              "no_request"
+            ],
+            10
           ],
           [
             [
@@ -827,10 +834,17 @@
           ],
           [
             [
-              "account_access",
+              "tech_support",
               "no_request"
             ],
-            8
+            7
+          ],
+          [
+            [
+              "product_info",
+              "no_request"
+            ],
+            5
           ],
           [
             [
@@ -841,116 +855,102 @@
           ],
           [
             [
-              "tech_support",
-              "no_request"
-            ],
-            4
-          ],
-          [
-            [
-              "billing_charge",
-              "no_request"
-            ],
-            3
-          ],
-          [
-            [
               "return_replace",
               "fraud_report"
             ],
-            3
+            4
           ]
         ]
       },
       "random": {
-        "n": 109,
-        "intent_accuracy": 0.385,
-        "intent_macro_f1": 0.352,
+        "n": 150,
+        "intent_accuracy": 0.367,
+        "intent_macro_f1": 0.322,
         "routing": {
-          "n": 109,
-          "accuracy": 0.431,
-          "missed_escalation": 60,
-          "missed_escalation_rate": 0.55,
-          "needless_escalation": 2,
-          "needless_escalation_rate": 0.018,
-          "auto_rate": 0.743,
-          "gold_auto_rate": 0.211,
-          "auto_precision": 0.259,
-          "expected_cost": 5.523
+          "n": 150,
+          "accuracy": 0.4,
+          "missed_escalation": 86,
+          "missed_escalation_rate": 0.573,
+          "needless_escalation": 4,
+          "needless_escalation_rate": 0.027,
+          "auto_rate": 0.787,
+          "gold_auto_rate": 0.24,
+          "auto_precision": 0.271,
+          "expected_cost": 5.76
         },
         "reply_quality_auto_only": {
-          "mean_grounded": 2.691,
-          "mean_helpful": 2.012,
-          "mean_tone": 2.741,
-          "mean_safe": 3.901,
-          "n_judged": 81,
-          "mean_composite": 2.836,
-          "unsupported_claim_rate": 0.469,
+          "mean_grounded": 2.669,
+          "mean_helpful": 2.008,
+          "mean_tone": 2.788,
+          "mean_safe": 3.881,
+          "n_judged": 118,
+          "mean_composite": 2.837,
+          "unsupported_claim_rate": 0.5,
           "worst_axis_counts": {
-            "grounded": 17,
-            "helpful": 47,
-            "tone": 15,
-            "safe": 1
+            "helpful": 66,
+            "safe": 3,
+            "grounded": 27,
+            "tone": 21
           }
         },
         "reply_quality_all_drafts": {
-          "mean_grounded": 2.688,
-          "mean_helpful": 1.991,
-          "mean_tone": 2.771,
-          "mean_safe": 3.881,
-          "n_judged": 109,
-          "mean_composite": 2.833,
-          "unsupported_claim_rate": 0.495,
+          "mean_grounded": 2.66,
+          "mean_helpful": 1.967,
+          "mean_tone": 2.787,
+          "mean_safe": 3.873,
+          "n_judged": 150,
+          "mean_composite": 2.822,
+          "unsupported_claim_rate": 0.52,
           "worst_axis_counts": {
-            "grounded": 25,
-            "helpful": 67,
-            "tone": 15,
-            "safe": 1
+            "helpful": 89,
+            "safe": 3,
+            "grounded": 36,
+            "tone": 21
           }
         }
       },
       "enriched": {
-        "n": 63,
-        "intent_accuracy": 0.54,
-        "intent_macro_f1": 0.335,
+        "n": 70,
+        "intent_accuracy": 0.514,
+        "intent_macro_f1": 0.349,
         "routing": {
-          "n": 63,
-          "accuracy": 0.794,
-          "missed_escalation": 10,
-          "missed_escalation_rate": 0.159,
+          "n": 70,
+          "accuracy": 0.8,
+          "missed_escalation": 11,
+          "missed_escalation_rate": 0.157,
           "needless_escalation": 3,
-          "needless_escalation_rate": 0.048,
-          "auto_rate": 0.27,
-          "gold_auto_rate": 0.159,
-          "auto_precision": 0.412,
-          "expected_cost": 1.635
+          "needless_escalation_rate": 0.043,
+          "auto_rate": 0.286,
+          "gold_auto_rate": 0.171,
+          "auto_precision": 0.45,
+          "expected_cost": 1.614
         },
         "reply_quality_auto_only": {
-          "mean_grounded": 2.059,
-          "mean_helpful": 1.529,
-          "mean_tone": 2.176,
-          "mean_safe": 3.353,
-          "n_judged": 17,
-          "mean_composite": 2.279,
-          "unsupported_claim_rate": 0.529,
+          "mean_grounded": 1.95,
+          "mean_helpful": 1.5,
+          "mean_tone": 2.15,
+          "mean_safe": 3.4,
+          "n_judged": 20,
+          "mean_composite": 2.25,
+          "unsupported_claim_rate": 0.55,
           "worst_axis_counts": {
-            "helpful": 11,
-            "grounded": 5,
+            "grounded": 7,
+            "helpful": 12,
             "tone": 1
           }
         },
         "reply_quality_all_drafts": {
-          "mean_grounded": 2.381,
-          "mean_helpful": 1.81,
-          "mean_tone": 2.492,
-          "mean_safe": 3.508,
-          "n_judged": 63,
-          "mean_composite": 2.548,
-          "unsupported_claim_rate": 0.571,
+          "mean_grounded": 2.371,
+          "mean_helpful": 1.786,
+          "mean_tone": 2.486,
+          "mean_safe": 3.586,
+          "n_judged": 70,
+          "mean_composite": 2.557,
+          "unsupported_claim_rate": 0.557,
           "worst_axis_counts": {
-            "tone": 8,
-            "helpful": 41,
-            "grounded": 12,
+            "tone": 9,
+            "helpful": 45,
+            "grounded": 14,
             "safe": 2
           }
         }

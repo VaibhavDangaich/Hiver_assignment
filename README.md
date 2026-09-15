@@ -38,7 +38,7 @@ make data                  # downloads the 516MB TWCS csv (~2 min), verifies siz
 make corpus                # brand corpus + temporal split, ~90s
 make golden                # samples the golden slices (already committed; reruns identically)
 export ANTHROPIC_API_KEY=sk-...   # or: export LLM_BACKEND=cli  (uses `claude -p`)
-make eval                  # runs B0/B1/B2/AGENT + judge over 172 golden cases, ~8-10 min
+make eval                  # runs B0/B1/B2/AGENT + judge over all 220 golden cases, ~8-10 min
 make metrics
 make agreement
 ```

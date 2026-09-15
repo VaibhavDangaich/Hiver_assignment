@@ -1,7 +1,14 @@
 {
   "gold_provenance": {
-    "n": 0,
-    "note": "data/golden/labelled.jsonl absent -- run scripts/adjudicate.py. Until then all metrics use the A/B machine consensus and are labelled machine_consensus_provisional."
+    "n": 220,
+    "human_changed": 1,
+    "human_changed_rate": 0.005,
+    "by_queue_tag": {
+      "CONTESTED": 48,
+      "ambiguous": 53,
+      "routine": 119
+    },
+    "note": "human_changed counts items where the adjudicator overrode the machine proposal; the rest were confirmed by a human, not unreviewed."
   },
   "machine_pass_agreement": {
     "n": 220,
@@ -12,6 +19,6 @@
   },
   "judge_vs_human": {
     "n": 0,
-    "note": "artifacts/results/human_reply_ratings.jsonl absent -- run scripts/rate_replies.py. Judge scores are UNVALIDATED until then."
+    "note": "no overlap between human ratings and judged predictions"
   }
 }
